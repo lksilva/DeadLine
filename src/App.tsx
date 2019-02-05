@@ -1,48 +1,76 @@
 import React, { Component } from "react";
-import styled from 'styled-components';
-
-const initialJourney: number = 480;
-const finalJourney: number = 1320;
-const hoursOpenByDay: number = (finalJourney - initialJourney) / 60;
-const pixelPerHour: number = 90;
-const totalPixelsLane: number = pixelPerHour * hoursOpenByDay;
+import styled, { keyframes } from "styled-components";
 
 const Container = styled("div")<{ height: number }>`
-width: 100%;
-height: ${props => props.height}px;
-background-color: palevioletred;
+  width: 100%;
+  height: ${props => props.height}px;
+  background-color: palevioletred;
 `;
 
 const Orb = styled.div`
-width: 8px;
-height: 8px;
-background-color: #BC2C3E;
-border-radius: 4px;
+  width: 8px;
+  height: 8px;
+  background-color: #bc2c3e;
+  border-radius: 4px;
 `;
 
 const Line = styled.div`
-width: 100%;
-height: 1px;
-background-color: #BC2C3E 
+  width: 100%;
+  height: 1px;
+  background-color: #bc2c3e;
 `;
 
-const Trace = styled.div`
-flex-direction: row;
-height: 8px;
-display: flex;
-align-items: center;
-`
+const gravitation = keyframes`
+  from {
+    transform: translateY(0px);
+  }
 
+  to {
+    transform: translateY(${540}px);
+  }
+  `
+;
+
+/**
+ * 
+ * O tempo total do está em minutos, então multiplicamos por 60 porque no cenário real ele deve se movimentar em segundos
+*/
+const Trace = styled("div")<{ ride: number; totalTime: number }>`
+  flex-direction: row;
+  height: 8px;
+  display: flex;
+  align-items: center;
+  animation: ${gravitation} 840s linear;
+`;
+// transition: transform ${props => props.totalTime}s linear;
+// transform: translateY(${props => props.ride}px);
 export default class App extends Component {
+  state = {
+    initialJourney: 480,
+    finalJourney: 1320,
+    pixelPerHour: 90,
+    totalPixelsLane: 0,
+    totalTime: 0,
+  };
+
+  componentDidMount() {
+    const hoursOpenByDay = (this.state.finalJourney - this.state.initialJourney) / 60;
+    const totalPixelsLane = this.state.pixelPerHour * hoursOpenByDay;
+    const dropSpeed = this.state.pixelPerHour / 60; // pixels/min
+    const totalTime = totalPixelsLane / dropSpeed;
+    this.setState({ totalPixelsLane, totalTime });
+  }
+
   render() {
-    console.log('pixelPerHour', totalPixelsLane)
-    return(
+    const { totalPixelsLane, totalTime } = this.state;
+    console.log('this.state ==>>', this.state);
+    return (
       <Container height={totalPixelsLane}>
-        <Trace>
+        <Trace ride={totalPixelsLane} totalTime={totalTime}>
           <Orb />
           <Line />
         </Trace>
       </Container>
-    )
+    );
   }
-};
+}
