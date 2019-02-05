@@ -20,9 +20,9 @@ const Line = styled.div`
   background-color: #bc2c3e;
 `;
 
-const gravitation = (ride: number) => keyframes`
+const gravitation = (ride: number, currentTime: number) => keyframes`
   from {
-    transform: translateY(0px);
+    transform: translateY(${currentTime}px);
   }
 
   to {
@@ -35,22 +35,22 @@ const gravitation = (ride: number) => keyframes`
  * 
  * O tempo total do está em minutos, então multiplicamos por 60 porque no cenário real ele deve se movimentar em segundos
 */
-const Trace = styled("div")<{ ride: number; totalTime: number }>`
+const Trace = styled("div")<{ ride: number; totalTime: number; currentTime: number }>`
   flex-direction: row;
   height: 8px;
   display: flex;
   align-items: center;
-  animation: ${props => gravitation(props.ride)} ${props => props.totalTime}s linear;
+  animation: ${props => gravitation(props.ride, props.currentTime)} ${props => (props.totalTime * 60)}s linear;
 `;
-// transition: transform ${props => props.totalTime}s linear;
-// transform: translateY(${props => props.ride}px);
+
 export default class App extends Component {
   state = {
     initialJourney: 480,
     finalJourney: 1320,
     pixelPerHour: 90,
     totalPixelsLane: 0,
-    totalTime: 0,
+    totalTime: 0, // in minutes
+    currentTime: 0, // in minutes
   };
 
   componentDidMount() {
@@ -58,15 +58,22 @@ export default class App extends Component {
     const totalPixelsLane = this.state.pixelPerHour * hoursOpenByDay;
     const dropSpeed = this.state.pixelPerHour / 60; // pixels/min
     const totalTime = totalPixelsLane / dropSpeed;
-    this.setState({ totalPixelsLane, totalTime });
+
+    /**
+     * Estou pegando a hora atual em minutos para definir o start inicial do traço que delimita o horário atual na agenda
+     */
+    const now = new Date();
+    const currentTime = now.getHours() * 60 + now.getMinutes();
+
+    this.setState({ totalPixelsLane, totalTime, currentTime });
   }
 
   render() {
-    const { totalPixelsLane, totalTime } = this.state;
-    console.log('this.state ==>>', this.state);
+    const { totalPixelsLane, totalTime, currentTime } = this.state;
+
     return (
       <Container height={totalPixelsLane}>
-        <Trace ride={totalPixelsLane} totalTime={totalTime}>
+        <Trace ride={totalPixelsLane} totalTime={totalTime} currentTime={currentTime}>
           <Orb />
           <Line />
         </Trace>
