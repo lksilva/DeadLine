@@ -1,6 +1,5 @@
 import React, { Component, Fragment } from "react";
 import styled, { keyframes } from "styled-components";
-import { number } from "prop-types";
 
 const Container = styled("div")<{ height: number }>`
   width: 100%;
@@ -120,8 +119,9 @@ export default class App extends Component {
      */
     const now = new Date();
     const currentTime = now.getHours() * 60 + now.getMinutes();
-    console.log('Current time ==>>', currentTime);
-    this.setState({ totalPixelsLane, totalTime, currentTime, hoursOpenByDay });
+    const matchingTime = (currentTime - this.state.initialJourney) * dropSpeed;
+
+    this.setState({ totalPixelsLane, totalTime, currentTime: matchingTime, hoursOpenByDay });
   }
 
   render() {
