@@ -7,6 +7,10 @@ const Container = styled("div")<{ height: number }>`
   display: flex;
 `;
 
+const WrapperMetric = styled.div`
+  padding: 0px 11px;
+`
+
 const Orb = styled.div`
   width: 8px;
   height: 8px;
@@ -45,7 +49,7 @@ const Trace = styled("div")<{
   align-items: center;
   width: 100%;
   animation: ${props => gravitation(props.ride, props.currentTime)}
-    ${props => props.totalTime * 60}s linear;
+    ${props => props.totalTime * 30}s linear;
 `;
 
 /**
@@ -53,8 +57,7 @@ const Trace = styled("div")<{
  */
 
 interface IMetricHours {
-  initial: number;
-  end: number;
+  hoursArr: Array<string>;
   hourHeight: number;
   totalHeight: number;
 }
@@ -78,20 +81,7 @@ const Hour = styled("div")<{
 export const MetricHours = (props: IMetricHours) => {
   return (
     <HoursLane height={props.totalHeight}>
-      <Hour hourHeight={props.hourHeight}>8:00</Hour>
-      <Hour hourHeight={props.hourHeight}>9:00</Hour>
-      <Hour hourHeight={props.hourHeight}>10:00</Hour>
-      <Hour hourHeight={props.hourHeight}>11:00</Hour>
-      <Hour hourHeight={props.hourHeight}>12:00</Hour>
-      <Hour hourHeight={props.hourHeight}>13:00</Hour>
-      <Hour hourHeight={props.hourHeight}>14:00</Hour>
-      <Hour hourHeight={props.hourHeight}>15:00</Hour>
-      <Hour hourHeight={props.hourHeight}>16:00</Hour>
-      <Hour hourHeight={props.hourHeight}>17:00</Hour>
-      <Hour hourHeight={props.hourHeight}>18:00</Hour>
-      <Hour hourHeight={props.hourHeight}>19:00</Hour>
-      <Hour hourHeight={props.hourHeight}>20:00</Hour>
-      <Hour hourHeight={props.hourHeight}>21:00</Hour>
+      {props.hoursArr.map(item => <Hour key={item} hourHeight={props.hourHeight}>{item}</Hour>)}
     </HoursLane>
   );
 };
@@ -104,14 +94,18 @@ export default class App extends Component {
     hoursOpenByDay: 0,
     totalPixelsLane: 0,
     totalTime: 0, // in minutes
-    currentTime: 0 // in minutes
+    currentTime: 0, // in minutes
+    hoursArr: [],
   };
 
   componentDidMount() {
+    const { finalJourney, initialJourney, pixelPerHour } = this.state;
+    let arr: Array<string> = [];
+
     const hoursOpenByDay =
-      (this.state.finalJourney - this.state.initialJourney) / 60;
-    const totalPixelsLane = this.state.pixelPerHour * hoursOpenByDay;
-    const dropSpeed = this.state.pixelPerHour / 60; // pixels/min
+      (finalJourney - initialJourney) / 60;
+    const totalPixelsLane = pixelPerHour * hoursOpenByDay;
+    const dropSpeed = pixelPerHour / 60; // pixels/min
     const totalTime = totalPixelsLane / dropSpeed;
 
     /**
@@ -121,7 +115,14 @@ export default class App extends Component {
     const currentTime = now.getHours() * 60 + now.getMinutes();
     const matchingTime = (currentTime - this.state.initialJourney) * dropSpeed;
 
-    this.setState({ totalPixelsLane, totalTime, currentTime: matchingTime, hoursOpenByDay });
+    /**
+     * Simulando a criação de um array com os horários do salão, talvez essa informação venha do backend e não precise manipular
+     */
+    for (let i = initialJourney; i < finalJourney; i += 60) {
+      arr = arr.concat(`${(i / 60)}:00`);
+    };
+
+    this.setState({ totalPixelsLane, totalTime, currentTime: matchingTime, hoursOpenByDay, hoursArr: arr });
   }
 
   render() {
@@ -130,18 +131,18 @@ export default class App extends Component {
       totalTime,
       currentTime,
       pixelPerHour,
-      finalJourney,
-      initialJourney
+      hoursArr,
     } = this.state;
 
     return (
       <Container height={totalPixelsLane}>
-        <MetricHours
-          initial={initialJourney}
-          end={finalJourney}
-          hourHeight={pixelPerHour}
-          totalHeight={totalPixelsLane}
-        />
+        <WrapperMetric>
+          <MetricHours
+            hourHeight={pixelPerHour}
+            totalHeight={totalPixelsLane}
+            hoursArr={hoursArr}
+          />
+        </WrapperMetric>
         <Trace
           ride={totalPixelsLane}
           totalTime={totalTime}
