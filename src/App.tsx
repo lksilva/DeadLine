@@ -20,13 +20,13 @@ const Line = styled.div`
   background-color: #bc2c3e;
 `;
 
-const gravitation = keyframes`
+const gravitation = (ride: number) => keyframes`
   from {
     transform: translateY(0px);
   }
 
   to {
-    transform: translateY(${540}px);
+    transform: translateY(${ride}px);
   }
   `
 ;
@@ -40,7 +40,7 @@ const Trace = styled("div")<{ ride: number; totalTime: number }>`
   height: 8px;
   display: flex;
   align-items: center;
-  animation: ${gravitation} 840s linear;
+  animation: ${props => gravitation(props.ride)} ${props => props.totalTime}s linear;
 `;
 // transition: transform ${props => props.totalTime}s linear;
 // transform: translateY(${props => props.ride}px);
