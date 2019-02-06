@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from "react";
+import React, { Component } from "react";
 import styled, { keyframes } from "styled-components";
 
 const Container = styled("div")<{ height: number }>`
@@ -9,7 +9,7 @@ const Container = styled("div")<{ height: number }>`
 
 const WrapperMetric = styled.div`
   padding: 0px 11px;
-`
+`;
 
 const Orb = styled.div`
   width: 8px;
@@ -22,35 +22,52 @@ const Line = styled.div`
   width: 100%;
   height: 1px;
   background-color: #bc2c3e;
+  top: 4px;
+  position: absolute;
 `;
 
-const gravitation = (ride: number, currentTime: number) => keyframes`
+const gravitation = (initialY: number, finalY: number) => keyframes`
   from {
-    transform: translateY(${currentTime}px);
+    transform: translateY(${initialY}px);
   }
 
   to {
-    transform: translateY(${ride}px);
+    transform: translateY(${finalY}px);
   }
   `;
 
 /**
  *
- * O tempo total do está em minutos, então multiplicamos por 60 porque no cenário real ele deve se movimentar em segundos
+ * O tempo total está em minutos, então multiplicamos por 60 porque no cenário real ele deve se movimentar em segundos
  */
 const Trace = styled("div")<{
-  ride: number;
+  initialPosition: number;
   totalTime: number;
-  currentTime: number;
+  finalPosition: number;
 }>`
-  flex-direction: row;
   height: 8px;
-  display: flex;
-  align-items: center;
   width: 100%;
-  animation: ${props => gravitation(props.ride, props.currentTime)}
-    ${props => props.totalTime * 30}s linear;
+  position: absolute;
+  top: ${props => props.finalPosition}px
 `;
+
+// animation: ${props => gravitation(props.initialPosition, props.finalPosition)} 0.1s linear;
+
+// Graviton feito através apenas do css
+
+// const Trace = styled("div")<{
+//   ride: number;
+//   totalTime: number;
+//   currentTime: number;
+// }>`
+//   flex-direction: row;
+//   height: 8px;
+//   display: flex;
+//   align-items: center;
+//   width: 100%;
+//   animation: ${props => gravitation(props.ride, props.currentTime)}
+//     ${props => props.totalTime * 15}s linear;
+// `;
 
 /**
  * Component HoursLane
@@ -81,7 +98,11 @@ const Hour = styled("div")<{
 export const MetricHours = (props: IMetricHours) => {
   return (
     <HoursLane height={props.totalHeight}>
-      {props.hoursArr.map(item => <Hour key={item} hourHeight={props.hourHeight}>{item}</Hour>)}
+      {props.hoursArr.map(item => (
+        <Hour key={item} hourHeight={props.hourHeight}>
+          {item}
+        </Hour>
+      ))}
     </HoursLane>
   );
 };
@@ -94,16 +115,18 @@ export default class App extends Component {
     hoursOpenByDay: 0,
     totalPixelsLane: 0,
     totalTime: 0, // in minutes
-    currentTime: 0, // in minutes
     hoursArr: [],
+    initialPosition: 0,
+    finalPosition: 0,
+    dropSpeed: 0,
+    intervalId: 0,
   };
 
   componentDidMount() {
     const { finalJourney, initialJourney, pixelPerHour } = this.state;
     let arr: Array<string> = [];
 
-    const hoursOpenByDay =
-      (finalJourney - initialJourney) / 60;
+    const hoursOpenByDay = (finalJourney - initialJourney) / 60;
     const totalPixelsLane = pixelPerHour * hoursOpenByDay;
     const dropSpeed = pixelPerHour / 60; // pixels/min
     const totalTime = totalPixelsLane / dropSpeed;
@@ -113,25 +136,59 @@ export default class App extends Component {
      */
     const now = new Date();
     const currentTime = now.getHours() * 60 + now.getMinutes();
-    const matchingTime = (currentTime - this.state.initialJourney) * dropSpeed;
+    const initialPosition = (currentTime - this.state.initialJourney) * dropSpeed;
+    const finalPosition = initialPosition + dropSpeed;
 
     /**
      * Simulando a criação de um array com os horários do salão, talvez essa informação venha do backend e não precise manipular
      */
     for (let i = initialJourney; i < finalJourney; i += 60) {
-      arr = arr.concat(`${(i / 60)}:00`);
-    };
+      arr = arr.concat(`${i / 60}:00`);
+    }
 
-    this.setState({ totalPixelsLane, totalTime, currentTime: matchingTime, hoursOpenByDay, hoursArr: arr });
+    this.setState({
+      totalPixelsLane,
+      totalTime,
+      initialPosition,
+      finalPosition,
+      hoursOpenByDay,
+      hoursArr: arr,
+      dropSpeed,
+    }, () => this.triggerTick());
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.state.intervalId);
+  }
+
+  /**
+   * Método responsável por descer 1.5 pixels a cada minuto
+   */
+  triggerTick = () => {
+    const minutes = 1; // o intervalo de tempo em minutos com que cada tick será disparado
+
+    const minuteInMs = 60000;
+
+    const intervalId = setInterval(() => this.tick(minutes), minuteInMs * minutes);
+    this.setState({ intervalId });
+  }
+
+  tick = (minutes: number) => {
+    const { finalPosition, dropSpeed } = this.state;
+    const currentPos = finalPosition;
+    const finalPos = finalPosition + (dropSpeed * minutes);
+
+    this.setState({ initialPosition: currentPos, finalPosition: finalPos });
   }
 
   render() {
     const {
       totalPixelsLane,
       totalTime,
-      currentTime,
+      initialPosition,
+      finalPosition,
       pixelPerHour,
-      hoursArr,
+      hoursArr
     } = this.state;
 
     return (
@@ -143,11 +200,12 @@ export default class App extends Component {
             hoursArr={hoursArr}
           />
         </WrapperMetric>
-        <Trace
+        {/* <Trace
           ride={totalPixelsLane}
           totalTime={totalTime}
           currentTime={currentTime}
-        >
+        > */}
+        <Trace totalTime={totalTime} initialPosition={initialPosition} finalPosition={finalPosition}>
           <Orb />
           <Line />
         </Trace>
