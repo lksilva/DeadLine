@@ -123,13 +123,15 @@ export default class App extends Component {
   };
 
   componentDidMount() {
-    window.addEventListener('visibilitychange', this.handleVisibility);
+    document.addEventListener('visibilitychange', this.handleVisibility, false);
+    window.addEventListener('focus', this.handleForceVisibility, false);
     this.setTracePosition();
   }
 
   componentWillUnmount() {
     clearInterval(this.state.intervalId);
-    window.removeEventListener('visibilitychange', this.handleVisibility);
+    document.removeEventListener('visibilitychange', this.handleVisibility);
+    window.removeEventListener('focus', this.handleForceVisibility);
   }
 
   setTracePosition = () => {
@@ -170,18 +172,30 @@ export default class App extends Component {
   }
 
   /**
-   * Metodo responsavel por manipular quanto o usuario voltou a deixar a aba do navegador ativa
+   * Metodo responsável por manipular quanto o usuário voltou a deixar a aba do navegador ativa
    * Para mais informações de como funciona a API que manipula o status das abas nos navegadores
    * https://developer.mozilla.org/en-US/docs/Web/API/Page_Visibility_API
    * 
    */
 
   handleVisibility = () => {
-    if (document.visibilityState === 'visible') {
+    if (!document.hidden) {
+      console.log('#handleVisibility Vai disparar o evento de setTracePosition');
       this.setTracePosition();
     }
   }
-
+  /**
+   * Existe alguns casos em que o PageVisibilityAPI não detecta que o browser está ativo novamente,
+   * então eu criei essa função pra forçar a reposição do traço que delimita o horário quando cair nesses casos
+   * https://able.bio/drenther/track-page-visibility-in-react-using-render-props--78o9yw5
+   */
+  handleForceVisibility = () => {
+    console.log('#handleForceVisibility document.hidden ==>>', document.hidden);
+    if (document.hidden) {
+      console.log('vai forcar o TracePosition');
+      this.setTracePosition();
+    }
+  }
 
   /**
    * Método responsável por descer 1.5 pixels a cada minuto
