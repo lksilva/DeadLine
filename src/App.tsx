@@ -1,6 +1,19 @@
 import React, { Component } from "react";
 import styled, { keyframes } from "styled-components";
 
+// handleChange = () => {
+//   console.log('document.visibilityState ==>>', document.visibilityState);
+//   if (typeof document.hidden !== "undefined") { // Opera 12.10 and Firefox 18 and later support
+//     console.log('hidden e visibilitychange');
+//   } else if (typeof document.msHidden !== "undefined") {
+//   console.log('msHidden e msvisibilitychange');
+//   } else if (typeof document.webkitHidden !== "undefined") {
+//   console.log('webkitHidden e webkitvisibilitychange')
+//   }
+// }
+  
+//   document.addEventListener("visibilitychange", handleChange, false);
+
 const Container = styled("div")<{ height: number }>`
   width: 100%;
   height: ${props => props.height}px;
@@ -178,6 +191,9 @@ export default class App extends Component {
     const currentPos = finalPosition;
     const finalPos = finalPosition + (dropSpeed * minutes);
 
+    console.log('tick');
+    console.log('currentPos ==>>', currentPos);
+    console.log('finalPos ==>>', finalPos);
     this.setState({ initialPosition: currentPos, finalPosition: finalPos });
   }
 
