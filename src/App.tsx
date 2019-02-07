@@ -1,19 +1,6 @@
 import React, { Component } from "react";
 import styled, { keyframes } from "styled-components";
 
-// handleChange = () => {
-//   console.log('document.visibilityState ==>>', document.visibilityState);
-//   if (typeof document.hidden !== "undefined") { // Opera 12.10 and Firefox 18 and later support
-//     console.log('hidden e visibilitychange');
-//   } else if (typeof document.msHidden !== "undefined") {
-//   console.log('msHidden e msvisibilitychange');
-//   } else if (typeof document.webkitHidden !== "undefined") {
-//   console.log('webkitHidden e webkitvisibilitychange')
-//   }
-// }
-  
-//   document.addEventListener("visibilitychange", handleChange, false);
-
 const Container = styled("div")<{ height: number }>`
   width: 100%;
   height: ${props => props.height}px;
@@ -136,6 +123,18 @@ export default class App extends Component {
   };
 
   componentDidMount() {
+    window.addEventListener('visibilitychange', this.handleVisibility);
+    this.setTracePosition();
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.state.intervalId);
+    window.removeEventListener('visibilitychange', this.handleVisibility);
+  }
+
+  setTracePosition = () => {
+    clearInterval(this.state.intervalId);
+
     const { finalJourney, initialJourney, pixelPerHour } = this.state;
     let arr: Array<string> = [];
 
@@ -170,9 +169,19 @@ export default class App extends Component {
     }, () => this.triggerTick());
   }
 
-  componentWillUnmount() {
-    clearInterval(this.state.intervalId);
+  /**
+   * Metodo responsavel por manipular quanto o usuario voltou a deixar a aba do navegador ativa
+   * Para mais informações de como funciona a API que manipula o status das abas nos navegadores
+   * https://developer.mozilla.org/en-US/docs/Web/API/Page_Visibility_API
+   * 
+   */
+
+  handleVisibility = () => {
+    if (document.visibilityState === 'visible') {
+      this.setTracePosition();
+    }
   }
+
 
   /**
    * Método responsável por descer 1.5 pixels a cada minuto
@@ -191,9 +200,6 @@ export default class App extends Component {
     const currentPos = finalPosition;
     const finalPos = finalPosition + (dropSpeed * minutes);
 
-    console.log('tick');
-    console.log('currentPos ==>>', currentPos);
-    console.log('finalPos ==>>', finalPos);
     this.setState({ initialPosition: currentPos, finalPosition: finalPos });
   }
 
