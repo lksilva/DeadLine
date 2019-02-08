@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import styled, { keyframes } from "styled-components";
+import styled from "styled-components";
 
 const Container = styled("div")<{ height: number }>`
   width: 100%;
@@ -26,48 +26,35 @@ const Line = styled.div`
   position: absolute;
 `;
 
-const gravitation = (initialY: number, finalY: number) => keyframes`
-  from {
-    transform: translateY(${initialY}px);
-  }
-
-  to {
-    transform: translateY(${finalY}px);
-  }
-  `;
-
 /**
  *
  * O tempo total está em minutos, então multiplicamos por 60 porque no cenário real ele deve se movimentar em segundos
  */
-const Trace = styled("div")<{
-  initialPosition: number;
-  totalTime: number;
-  finalPosition: number;
-}>`
-  height: 8px;
-  width: 100%;
-  position: absolute;
-  top: ${props => props.finalPosition}px
-`;
+// const Trace = styled("div")<{
+//   initialPosition: number;
+//   totalTime: number;
+//   finalPosition: number;
+// }>`
+//   height: 8px;
+//   width: 100%;
+//   position: absolute;
+//   top: ${props => props.finalPosition}px
+// `;
 
 // animation: ${props => gravitation(props.initialPosition, props.finalPosition)} 0.1s linear;
 
 // Graviton feito através apenas do css
 
-// const Trace = styled("div")<{
-//   ride: number;
-//   totalTime: number;
-//   currentTime: number;
-// }>`
-//   flex-direction: row;
-//   height: 8px;
-//   display: flex;
-//   align-items: center;
-//   width: 100%;
-//   animation: ${props => gravitation(props.ride, props.currentTime)}
-//     ${props => props.totalTime * 15}s linear;
-// `;
+const Trace = styled("div")<{
+  finalPosition: number;
+}>`
+  flex-direction: row;
+  height: 8px;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  transform: translateY(${props => props.finalPosition}px);
+`;
 
 /**
  * Component HoursLane
@@ -220,8 +207,6 @@ export default class App extends Component {
   render() {
     const {
       totalPixelsLane,
-      totalTime,
-      initialPosition,
       finalPosition,
       pixelPerHour,
       hoursArr
@@ -236,12 +221,7 @@ export default class App extends Component {
             hoursArr={hoursArr}
           />
         </WrapperMetric>
-        {/* <Trace
-          ride={totalPixelsLane}
-          totalTime={totalTime}
-          currentTime={currentTime}
-        > */}
-        <Trace totalTime={totalTime} initialPosition={initialPosition} finalPosition={finalPosition}>
+        <Trace finalPosition={finalPosition}>
           <Orb />
           <Line />
         </Trace>
