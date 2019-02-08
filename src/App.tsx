@@ -22,8 +22,6 @@ const Line = styled.div`
   width: 100%;
   height: 1px;
   background-color: #bc2c3e;
-  top: 4px;
-  position: absolute;
 `;
 
 /**
