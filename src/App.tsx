@@ -2,15 +2,17 @@ import React, { Component } from "react";
 import styled from "styled-components";
 import MetricHours from './Schedule/MetricHours';
 import Trace from './Schedule/Trace';
+import ProfessionalLane from './Schedule/ProfessionalLane';
 
-const Container = styled("div")<{ height: number }>`
+const Container = styled.div`
   width: 100%;
-  height: ${props => props.height}px;
   display: flex;
 `;
 
 const WrapperMetric = styled.div`
-  padding: 0px 11px;
+  padding: 66px 11px 0 11px;
+  position: relative;
+  background: transparent;
 `;
 
 export default class App extends Component {
@@ -129,7 +131,7 @@ export default class App extends Component {
     } = this.state;
 
     return (
-      <Container height={totalPixelsLane}>
+      <Container>
         <WrapperMetric>
           <MetricHours
             hourHeight={pixelPerHour}
@@ -137,7 +139,12 @@ export default class App extends Component {
             hoursArr={hoursArr}
           />
         </WrapperMetric>
-        <Trace finalPosition={finalPosition} />
+        {/* <Trace finalPosition={finalPosition} /> */}
+        <div style={{ background: 'green', width: '100%', display: 'flex' }}>
+          <ProfessionalLane name="Pierre de Fermat" photo="https://avecbrasil.com.br/wp-content/uploads/2018/09/logo-roxo.png" />
+          <ProfessionalLane name="René Descartes" photo="https://avecbrasil.com.br/wp-content/uploads/2018/09/logo-roxo.png" />
+          <ProfessionalLane name="Gottfried Wilhelm Leibniz" photo="https://avecbrasil.com.br/wp-content/uploads/2018/09/logo-roxo.png" />
+        </div>
       </Container>
     );
   }
