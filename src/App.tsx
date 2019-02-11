@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import styled from "styled-components";
+import MetricHours from './Schedule/MetricHours';
+import Trace from './Schedule/Trace';
 
 const Container = styled("div")<{ height: number }>`
   width: 100%;
@@ -10,87 +12,6 @@ const Container = styled("div")<{ height: number }>`
 const WrapperMetric = styled.div`
   padding: 0px 11px;
 `;
-
-const Orb = styled.div`
-  width: 8px;
-  height: 8px;
-  background-color: #bc2c3e;
-  border-radius: 4px;
-`;
-
-const Line = styled.div`
-  width: 100%;
-  height: 1px;
-  background-color: #bc2c3e;
-`;
-
-/**
- *
- * O tempo total está em minutos, então multiplicamos por 60 porque no cenário real ele deve se movimentar em segundos
- */
-// const Trace = styled("div")<{
-//   initialPosition: number;
-//   totalTime: number;
-//   finalPosition: number;
-// }>`
-//   height: 8px;
-//   width: 100%;
-//   position: absolute;
-//   top: ${props => props.finalPosition}px
-// `;
-
-// animation: ${props => gravitation(props.initialPosition, props.finalPosition)} 0.1s linear;
-
-// Graviton feito através apenas do css
-
-const Trace = styled("div")<{
-  finalPosition: number;
-}>`
-  flex-direction: row;
-  height: 8px;
-  display: flex;
-  align-items: center;
-  width: 100%;
-  transform: translateY(${props => props.finalPosition}px);
-`;
-
-/**
- * Component HoursLane
- */
-
-interface IMetricHours {
-  hoursArr: Array<string>;
-  hourHeight: number;
-  totalHeight: number;
-}
-
-const HoursLane = styled("div")<{ height: number }>`
-  flex-direction: coloumn;
-  width: 36px;
-  height: ${props => props.height}px;
-`;
-
-const Hour = styled("div")<{
-  hourHeight: number;
-}>`
-  height: ${props => props.hourHeight}px;
-  display: flex;
-  justify-content: center;
-  font-size: 14px;
-  color: #7b7b88;
-`;
-
-export const MetricHours = (props: IMetricHours) => {
-  return (
-    <HoursLane height={props.totalHeight}>
-      {props.hoursArr.map(item => (
-        <Hour key={item} hourHeight={props.hourHeight}>
-          {item}
-        </Hour>
-      ))}
-    </HoursLane>
-  );
-};
 
 export default class App extends Component {
   state = {
@@ -165,7 +86,6 @@ export default class App extends Component {
 
   handleVisibility = () => {
     if (!document.hidden) {
-      console.log('#handleVisibility Vai disparar o evento de setTracePosition');
       this.setTracePosition();
     }
   }
@@ -175,9 +95,7 @@ export default class App extends Component {
    * https://able.bio/drenther/track-page-visibility-in-react-using-render-props--78o9yw5
    */
   handleForceVisibility = () => {
-    console.log('#handleForceVisibility document.hidden ==>>', document.hidden);
     if (document.hidden) {
-      console.log('vai forcar o TracePosition');
       this.setTracePosition();
     }
   }
@@ -219,10 +137,7 @@ export default class App extends Component {
             hoursArr={hoursArr}
           />
         </WrapperMetric>
-        <Trace finalPosition={finalPosition}>
-          <Orb />
-          <Line />
-        </Trace>
+        <Trace finalPosition={finalPosition} />
       </Container>
     );
   }
