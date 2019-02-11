@@ -3,10 +3,12 @@ import styled from "styled-components";
 import MetricHours from './Schedule/MetricHours';
 import Trace from './Schedule/Trace';
 import ProfessionalLane from './Schedule/ProfessionalLane';
+import { palette } from "./themes/palette";
 
 const Container = styled.div`
   width: 100%;
   display: flex;
+  background-color: #ffa5000d;
 `;
 
 const WrapperMetric = styled.div`
@@ -14,6 +16,12 @@ const WrapperMetric = styled.div`
   position: relative;
   background: transparent;
 `;
+
+const ListProfLanes = styled.div`
+  width: 100%;
+  display: flex;
+  border-left: 1px solid ${palette.primary.grayLight.A400};
+`
 
 export default class App extends Component {
   state = {
@@ -140,11 +148,11 @@ export default class App extends Component {
           />
         </WrapperMetric>
         {/* <Trace finalPosition={finalPosition} /> */}
-        <div style={{ background: 'green', width: '100%', display: 'flex' }}>
-          <ProfessionalLane name="Pierre de Fermat" photo="https://avecbrasil.com.br/wp-content/uploads/2018/09/logo-roxo.png" />
-          <ProfessionalLane name="René Descartes" photo="https://avecbrasil.com.br/wp-content/uploads/2018/09/logo-roxo.png" />
-          <ProfessionalLane name="Gottfried Wilhelm Leibniz" photo="https://avecbrasil.com.br/wp-content/uploads/2018/09/logo-roxo.png" />
-        </div>
+        <ListProfLanes>
+          <ProfessionalLane hourHeight={pixelPerHour} hoursArr={hoursArr} name="Pierre de Fermat" photo="https://avecbrasil.com.br/wp-content/uploads/2018/09/logo-roxo.png" />
+          <ProfessionalLane hourHeight={pixelPerHour} hoursArr={hoursArr} name="René Descartes" photo="https://avecbrasil.com.br/wp-content/uploads/2018/09/logo-roxo.png" />
+          <ProfessionalLane hourHeight={pixelPerHour} hoursArr={hoursArr} name="Gottfried Wilhelm Leibniz" photo="https://avecbrasil.com.br/wp-content/uploads/2018/09/logo-roxo.png" />
+        </ListProfLanes>
       </Container>
     );
   }

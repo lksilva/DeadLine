@@ -1,57 +1,77 @@
 import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
+import styled from "styled-components";
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
-import styled from "styled-components";
 import { palette } from "../themes/palette";
 import { Avatar } from '@material-ui/core';
+
+const Row = styled("div")<{
+  hourHeight: number;
+}>`
+  height: ${props => props.hourHeight}px;
+  border-bottom: 1px solid ${palette.primary.grayLight.A400};
+`;
 
 interface IProfessionalLane {
   name: string;
   photo: string;
   classes?: any;
+  hoursArr: Array<string>;
+  hourHeight: number;
 }
 
 const styles = () => ({
   card: {
     maxWidth: 170,
+    minWidth: 140,
     borderRadius: 0,
+    backgroundColor: 'transparent',
+    boxShadow: 'none',
   },
   cardHeader: {
-    backgroundColor: 'blue',
     height: 66,
     padding: 0,
     paddingLeft: 10,
+    backgroundColor: palette.primary.grayLight.A100,
+    borderBottom: `1px solid ${palette.primary.grayLight.A400}`,
+    borderTop: `1px solid ${palette.primary.grayLight.A400}`,
   },
   avatar: {
     width: 40,
     height: 40,
-    backgroundColor: 'red',
+  },
+  margin10: {
+    marginRight: 10
   },
   cardContent: {
-    paddingRight: 14,
-  }
+    padding: 0,
+    borderRight: `1px solid ${palette.primary.grayLight.A400}`,
+    "&:last-child": {
+      paddingBottom: 0,
+    }
+  },
 });
 
 class ProfessionalLane extends Component<IProfessionalLane> {
   render(){
 
-    const { classes, name, photo } = this.props;
+    const { classes, name, photo, hoursArr, hourHeight } = this.props;
     return(
-      <Card className={classes.card}>
+      <Card classes={{ root: classes.card }}> 
         <CardHeader
-          className={classes.cardHeader}
+          classes={{ root: classes.cardHeader, avatar: classes.margin10 }}
           avatar={
             <Avatar
               aria-label="Recipe"
-              className={classes.avatar}
+              classes={{ root: classes.avatar }}
             >P</Avatar>
           }
           title={name}
         />
-        <CardContent>
-          Conteudo do profissional
+        <CardContent classes={{ root: classes.cardContent, }}>
+          {hoursArr.map(item => <Row key={item} hourHeight={hourHeight} />)}
         </CardContent>
       </Card>
     )
