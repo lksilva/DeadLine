@@ -11,10 +11,16 @@ const Container = styled.div`
   background-color: #ffa5000d;
 `;
 
-const WrapperMetric = styled.div`
-  padding: 66px 11px 0 11px;
+const WrapperMetric = styled("div")<{
+  headerDiscount: number;
+}>`
+  padding: ${props => props.headerDiscount}px 11px 0 11px;
   position: relative;
   background: transparent;
+`;
+
+const WrapperBoard = styled.div`
+  background-color: #15ff151f;
 `;
 
 const ListProfLanes = styled.div`
@@ -138,21 +144,26 @@ export default class App extends Component {
       hoursArr
     } = this.state;
 
+    // É o tamanho do header de cada lane
+    const headerDiscount = 66;
+
     return (
       <Container>
-        <WrapperMetric>
+        <WrapperMetric headerDiscount={headerDiscount}>
           <MetricHours
             hourHeight={pixelPerHour}
             totalHeight={totalPixelsLane}
             hoursArr={hoursArr}
           />
         </WrapperMetric>
-        {/* <Trace finalPosition={finalPosition} /> */}
-        <ListProfLanes>
-          <ProfessionalLane hourHeight={pixelPerHour} hoursArr={hoursArr} name="Pierre de Fermat" photo="https://avecbrasil.com.br/wp-content/uploads/2018/09/logo-roxo.png" />
-          <ProfessionalLane hourHeight={pixelPerHour} hoursArr={hoursArr} name="René Descartes" photo="https://avecbrasil.com.br/wp-content/uploads/2018/09/logo-roxo.png" />
-          <ProfessionalLane hourHeight={pixelPerHour} hoursArr={hoursArr} name="Gottfried Wilhelm Leibniz" photo="https://avecbrasil.com.br/wp-content/uploads/2018/09/logo-roxo.png" />
-        </ListProfLanes>
+        <WrapperBoard>
+          <Trace headerDiscount={headerDiscount} finalPosition={finalPosition} />
+          <ListProfLanes>
+            <ProfessionalLane hourHeight={pixelPerHour} hoursArr={hoursArr} name="Pierre de Fermat" photo="https://avecbrasil.com.br/wp-content/uploads/2018/09/logo-roxo.png" />
+            <ProfessionalLane hourHeight={pixelPerHour} hoursArr={hoursArr} name="René Descartes" photo="https://avecbrasil.com.br/wp-content/uploads/2018/09/logo-roxo.png" />
+            <ProfessionalLane hourHeight={pixelPerHour} hoursArr={hoursArr} name="Gottfried Wilhelm Leibniz" photo="https://avecbrasil.com.br/wp-content/uploads/2018/09/logo-roxo.png" />
+          </ListProfLanes>
+        </WrapperBoard>
       </Container>
     );
   }

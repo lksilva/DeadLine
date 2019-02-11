@@ -3,6 +3,7 @@ import styled from 'styled-components';
 
 interface ITrace {
   finalPosition: number;
+  headerDiscount: number;
 }
 
 const Orb = styled.div`
@@ -20,6 +21,7 @@ const Line = styled.div`
 
 const Container = styled("div")<{
   finalPosition: number;
+  headerDiscount: number;
 }>`
   flex-direction: row;
   height: 8px;
@@ -27,11 +29,13 @@ const Container = styled("div")<{
   align-items: center;
   width: 100%;
   transform: translateY(${props => props.finalPosition}px);
+  position: absolute;
+  margin-top: ${props => props.headerDiscount}px
 `;
 
 const Trace = (props: ITrace) => {
   return (
-    <Container finalPosition={props.finalPosition}>
+    <Container headerDiscount={props.headerDiscount} finalPosition={props.finalPosition}>
       <Orb />
       <Line />
     </Container>
