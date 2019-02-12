@@ -9,6 +9,7 @@ const Container = styled.div`
   width: 100%;
   display: flex;
   background-color: #ffa5000d;
+  overflow-x: hidden;
 `;
 
 const WrapperMetric = styled("div")<{
