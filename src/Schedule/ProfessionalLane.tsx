@@ -24,8 +24,7 @@ interface IProfessionalLane {
 
 const styles = () => ({
   card: {
-    maxWidth: 170,
-    minWidth: 140,
+    width: 170,
     borderRadius: 0,
     backgroundColor: 'transparent',
     boxShadow: 'none',

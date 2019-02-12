@@ -35,7 +35,7 @@ const Container = styled("div")<{
 
 const Trace = (props: ITrace) => {
   return (
-    <Container headerDiscount={props.headerDiscount} finalPosition={props.finalPosition}>
+    <Container headerDiscount={(props.headerDiscount - 4)} finalPosition={props.finalPosition}>
       <Orb />
       <Line />
     </Container>

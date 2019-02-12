@@ -162,6 +162,8 @@ export default class App extends Component {
             <ProfessionalLane hourHeight={pixelPerHour} hoursArr={hoursArr} name="Pierre de Fermat" photo="https://avecbrasil.com.br/wp-content/uploads/2018/09/logo-roxo.png" />
             <ProfessionalLane hourHeight={pixelPerHour} hoursArr={hoursArr} name="René Descartes" photo="https://avecbrasil.com.br/wp-content/uploads/2018/09/logo-roxo.png" />
             <ProfessionalLane hourHeight={pixelPerHour} hoursArr={hoursArr} name="Gottfried Wilhelm Leibniz" photo="https://avecbrasil.com.br/wp-content/uploads/2018/09/logo-roxo.png" />
+            <ProfessionalLane hourHeight={pixelPerHour} hoursArr={hoursArr} name="Leonhard Paul Euler" photo="https://avecbrasil.com.br/wp-content/uploads/2018/09/logo-roxo.png" />
+            <ProfessionalLane hourHeight={pixelPerHour} hoursArr={hoursArr} name="Évariste Galois" photo="https://avecbrasil.com.br/wp-content/uploads/2018/09/logo-roxo.png" />
           </ListProfLanes>
         </WrapperBoard>
       </Container>
