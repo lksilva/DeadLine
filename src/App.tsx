@@ -21,6 +21,8 @@ const WrapperMetric = styled("div")<{
 
 const WrapperBoard = styled.div`
   background-color: #15ff151f;
+  top: -8px;
+  position: relative;
 `;
 
 const ListProfLanes = styled.div`

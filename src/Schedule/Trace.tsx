@@ -28,9 +28,7 @@ const Container = styled("div")<{
   display: flex;
   align-items: center;
   width: 100%;
-  transform: translateY(${props => props.finalPosition}px);
-  position: absolute;
-  margin-top: ${props => props.headerDiscount}px
+  transform: translateY(${props => ( props.finalPosition + props.headerDiscount )}px);
 `;
 
 const Trace = (props: ITrace) => {
