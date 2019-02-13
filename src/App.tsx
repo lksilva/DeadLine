@@ -1,4 +1,5 @@
 import React, { Component, createRef } from "react";
+import Icon from '@material-ui/core/Icon';
 import styled from "styled-components";
 import MetricHours from './Schedule/MetricHours';
 import Trace from './Schedule/Trace';
@@ -31,13 +32,17 @@ const ListProfLanes = styled.div`
   display: flex;
 `
 
-const Button = styled.button`
-  width: 100px;
-  height: 50px;
-  background-color: #ff000040;
-  position: absolute;
-  top: 100px;
-  left: 250px;
+const Button = styled.div`
+  height: 66px;
+  background-color: ${palette.primary.grayLight.A100};
+  position: sticky;
+  right: 0px;
+  top: 0px;
+  color: ${palette.secondary.grayLight.A900};
+  border: 1px solid ${palette.primary.grayLight.A400};
+  justify-content: center;
+  align-items: center;
+  display: flex;
 `;
 
 export default class App extends Component {
@@ -149,11 +154,25 @@ export default class App extends Component {
 
   handleProfSlider = () => {
     // Usando o ! para passar pelo TypeScript's Non-null 
-    const node = this.scheduleBoard.current!;
-    node.scrollLeft += 400;
+    const node = this.refScheduleBoard.current!;
+    const nodeScheduleContent = this.refScheduleLanes.current!;
+    const laneWidth = 170;
+
+    const screenSize = node.offsetWidth;
+    const scheduleContentSize = nodeScheduleContent.offsetWidth;
+    const limitXScrool = node.scrollWidth;
+    // Faço esse pequeno calculo para garantir que sempre o primeiro profissional ao realizar um scroll,
+    // vai ser exibido
+    const variantFactor = (Math.round(scheduleContentSize / laneWidth)) * laneWidth;
+
+    if (node.scrollLeft + variantFactor <= limitXScrool) {
+      node.scrollLeft += variantFactor;
+    }
   }
 
-  private scheduleBoard = createRef<HTMLDivElement>()
+  private refScheduleBoard = createRef<HTMLDivElement>()
+
+  private refScheduleLanes = createRef<HTMLDivElement>()
 
   render() {
     const {
@@ -167,8 +186,8 @@ export default class App extends Component {
     const headerDiscount = 66;
 
     return (
-      <div style={{ width: '100%', height: 500, overflow: 'hidden auto' }} ref={this.scheduleBoard}>
-        <Container>
+      <div style={{ width: '100%', overflow: 'auto' }} ref={this.refScheduleBoard}>
+        <Container ref={this.refScheduleLanes}>
           <WrapperMetric headerDiscount={headerDiscount}>
             <MetricHours
               hourHeight={pixelPerHour}
@@ -193,9 +212,18 @@ export default class App extends Component {
               <ProfessionalLane hourHeight={pixelPerHour} hoursArr={hoursArr} name="Gottfried Wilhelm Leibniz" photo="https://avecbrasil.com.br/wp-content/uploads/2018/09/logo-roxo.png" />
               <ProfessionalLane hourHeight={pixelPerHour} hoursArr={hoursArr} name="Leonhard Paul Euler" photo="https://avecbrasil.com.br/wp-content/uploads/2018/09/logo-roxo.png" />
               <ProfessionalLane hourHeight={pixelPerHour} hoursArr={hoursArr} name="Évariste Galois" photo="https://avecbrasil.com.br/wp-content/uploads/2018/09/logo-roxo.png" />
+              <ProfessionalLane hourHeight={pixelPerHour} hoursArr={hoursArr} name="Leonhard Paul Euler" photo="https://avecbrasil.com.br/wp-content/uploads/2018/09/logo-roxo.png" />
+              <ProfessionalLane hourHeight={pixelPerHour} hoursArr={hoursArr} name="Évariste Galois" photo="https://avecbrasil.com.br/wp-content/uploads/2018/09/logo-roxo.png" />
+              <ProfessionalLane hourHeight={pixelPerHour} hoursArr={hoursArr} name="Pierre de Fermat" photo="https://avecbrasil.com.br/wp-content/uploads/2018/09/logo-roxo.png" />
+              <ProfessionalLane hourHeight={pixelPerHour} hoursArr={hoursArr} name="René Descartes" photo="https://avecbrasil.com.br/wp-content/uploads/2018/09/logo-roxo.png" />
+              <ProfessionalLane hourHeight={pixelPerHour} hoursArr={hoursArr} name="Gottfried Wilhelm Leibniz" photo="https://avecbrasil.com.br/wp-content/uploads/2018/09/logo-roxo.png" />
+              <ProfessionalLane hourHeight={pixelPerHour} hoursArr={hoursArr} name="Leonhard Paul Euler" photo="https://avecbrasil.com.br/wp-content/uploads/2018/09/logo-roxo.png" />
+              <ProfessionalLane hourHeight={pixelPerHour} hoursArr={hoursArr} name="Évariste Galois" photo="https://avecbrasil.com.br/wp-content/uploads/2018/09/logo-roxo.png" />
             </ListProfLanes>
           </WrapperBoard>
-          <Button onClick={this.handleProfSlider}>==>></Button>
+          <Button onClick={this.handleProfSlider}>
+            <Icon fontSize="large" color="default">keyboard_arrow_right</Icon>
+          </Button>
         </Container>
       </div>
     );
