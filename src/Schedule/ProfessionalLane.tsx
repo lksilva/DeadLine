@@ -25,9 +25,11 @@ interface IProfessionalLane {
 const styles = () => ({
   card: {
     width: 170,
+    minWidth: 170,
     borderRadius: 0,
     backgroundColor: 'transparent',
     boxShadow: 'none',
+    overflow: 'initial',
   },
   cardHeader: {
     height: 66,
@@ -36,6 +38,8 @@ const styles = () => ({
     backgroundColor: palette.primary.grayLight.A100,
     borderBottom: `1px solid ${palette.primary.grayLight.A400}`,
     borderTop: `1px solid ${palette.primary.grayLight.A400}`,
+    position: 'sticky' as 'sticky',
+    top: 0,
   },
   avatar: {
     width: 40,
