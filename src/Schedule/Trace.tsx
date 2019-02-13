@@ -11,6 +11,8 @@ const Orb = styled.div`
   height: 8px;
   background-color: #bc2c3e;
   border-radius: 4px;
+  position: absolute;
+  left: -4px;
 `;
 
 const Line = styled.div`
