@@ -23,8 +23,14 @@ const Hour = styled("div")<{
   height: ${props => props.hourHeight}px;
   display: flex;
   justify-content: center;
+`;
+
+const Label = styled.p`
   font-size: 14px;
   color: #7b7b88;
+  margin: 0;
+  position: relative;
+  top: -10px;
 `;
 
 const MetricHours = (props: IMetricHours) => {
@@ -32,7 +38,7 @@ const MetricHours = (props: IMetricHours) => {
     <HoursLane height={props.totalHeight}>
       {props.hoursArr.map(item => (
         <Hour key={item} hourHeight={props.hourHeight}>
-          {item}
+          <Label>{item}</Label>
         </Hour>
       ))}
     </HoursLane>

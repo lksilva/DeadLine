@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, createRef } from "react";
 import styled from "styled-components";
 import MetricHours from './Schedule/MetricHours';
 import Trace from './Schedule/Trace';
@@ -30,6 +30,15 @@ const ListProfLanes = styled.div`
   border-left: 1px solid ${palette.primary.grayLight.A400};
   display: flex;
 `
+
+const Button = styled.button`
+  width: 100px;
+  height: 50px;
+  background-color: #ff000040;
+  position: absolute;
+  top: 100px;
+  left: 250px;
+`;
 
 export default class App extends Component {
   state = {
@@ -138,6 +147,14 @@ export default class App extends Component {
     this.setState({ initialPosition: currentPos, finalPosition: finalPos });
   }
 
+  handleProfSlider = () => {
+    // Usando o ! para passar pelo TypeScript's Non-null 
+    const node = this.scheduleBoard.current!;
+    node.scrollLeft += 400;
+  }
+
+  private scheduleBoard = createRef<HTMLDivElement>()
+
   render() {
     const {
       totalPixelsLane,
@@ -150,7 +167,7 @@ export default class App extends Component {
     const headerDiscount = 66;
 
     return (
-      <div style={{ width: 568, height: 500, overflow: 'auto' }}>
+      <div style={{ width: '100%', height: 500, overflow: 'hidden auto' }} ref={this.scheduleBoard}>
         <Container>
           <WrapperMetric headerDiscount={headerDiscount}>
             <MetricHours
@@ -178,6 +195,7 @@ export default class App extends Component {
               <ProfessionalLane hourHeight={pixelPerHour} hoursArr={hoursArr} name="Évariste Galois" photo="https://avecbrasil.com.br/wp-content/uploads/2018/09/logo-roxo.png" />
             </ListProfLanes>
           </WrapperBoard>
+          <Button onClick={this.handleProfSlider}>==>></Button>
         </Container>
       </div>
     );
