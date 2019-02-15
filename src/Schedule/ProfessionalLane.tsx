@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, createRef } from "react";
 import { withStyles } from "@material-ui/core/styles";
 import styled from "styled-components";
 import Card from "@material-ui/core/Card";
@@ -74,8 +74,17 @@ class ProfessionalLane extends Component<IProfessionalLane, IState> {
     isPressed: false
   };
 
+  // Aqui deve ter pego a posição do Row clicado para passar 
+  /**
+   * Talvez não seja a melhor solução utilizar Ref para capturar a posição do elemento clicado
+   * melhor capturar a posição na qual o usuário clicou e apartir dai realizar algum calculo
+   * matemático para saber em que posição do eixo y deve ser inserido o booking, se isso der
+   * muito trabalho vamos partir a força bruta e colocar um ref para cada elemento
+   */
   createBooking = () => {
-    console.log("Criar o booking");
+    const node = this.refRow.current!;
+
+    console.log(node.scrollHeight);
     /**
      * Simulando a criação dos bookings variando em apenas dois status
      */
@@ -116,6 +125,8 @@ class ProfessionalLane extends Component<IProfessionalLane, IState> {
     this.setState({ isPressed: false });
   };
 
+  private refRow = createRef<HTMLDivElement>()
+
   render() {
     const { classes, name, photo, hoursArr, hourHeight } = this.props;
 
@@ -136,6 +147,7 @@ class ProfessionalLane extends Component<IProfessionalLane, IState> {
               onClick={this.createBooking}
               key={item}
               hourHeight={hourHeight}
+              ref={this.refRow}
             />
           ))}
           {!!this.state.bookings.length &&
