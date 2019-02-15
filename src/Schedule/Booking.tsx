@@ -31,14 +31,19 @@ const Title = styled("div")<{
   line-height: 1.35em;
 `
 
+const Description = styled.div`
+  cursor: pointer;
+`;
+
 interface IBooking {
   status: "scheduled" | "confirmed" | "waiting" | "inProgress" | "finished" | "paid" | "preferential" | "programed" | "noShow";
   height: number;
   client: string;
   service: string;
+  handleBooking: () => void;
 }
 
-const Booking: React.SFC<IBooking> = ({ height, status, client, service }) => {
+const Booking: React.SFC<IBooking> = ({ height, status, client, service, handleBooking }) => {
   return (
     <Rnd
       style={{
@@ -47,6 +52,7 @@ const Booking: React.SFC<IBooking> = ({ height, status, client, service }) => {
         position: "absolute",
         borderRadius: 2,
         padding: 5,
+        overflow: 'hidden',
       }}
       default={{
         x: 0,
@@ -55,6 +61,7 @@ const Booking: React.SFC<IBooking> = ({ height, status, client, service }) => {
         height: height
       }}
       resizeGrid={[1, 15]}
+      dragGrid={[1, 15]}
       enableResizing={{
         top: false,
         right: false,
@@ -67,15 +74,17 @@ const Booking: React.SFC<IBooking> = ({ height, status, client, service }) => {
       }}
       bounds="parent"
     >
-      <Text color={theme[status].contrastText}>
-        12:00 - 14:00
-      </Text>
-      <Title color={theme[status].contrastText}>
-        {client}
-      </Title>
-      <Text color={theme[status].contrastText}>
-        {service}
-      </Text>
+      <Description onClick={handleBooking}>
+        <Text color={theme[status].contrastText}>
+          12:00 - 14:00
+        </Text>
+        <Title color={theme[status].contrastText}>
+          {client}
+        </Title>
+        <Text color={theme[status].contrastText}>
+          {service}
+        </Text>
+      </Description>
     </Rnd>
   );
 };

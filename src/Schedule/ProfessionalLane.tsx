@@ -6,7 +6,7 @@ import CardHeader from "@material-ui/core/CardHeader";
 import CardContent from "@material-ui/core/CardContent";
 import { palette } from "../themes/palette";
 import { Avatar } from "@material-ui/core";
-import Booking from './Booking';
+import Booking from "./Booking";
 
 interface IState {
   bookings: Array<any>;
@@ -36,7 +36,7 @@ const styles = () => ({
     borderRadius: 0,
     backgroundColor: "transparent",
     boxShadow: "none",
-    overflow: "initial",
+    overflow: "initial"
   },
   cardHeader: {
     height: 66,
@@ -80,7 +80,9 @@ class ProfessionalLane extends Component<IProfessionalLane, IState> {
      * Simulando a criação dos bookings variando em apenas dois status
      */
     const status = Math.floor(Math.random() * 2) ? "scheduled" : "inProgress";
-    const client = Math.floor(Math.random() * 2) ? "Daniel Bernoulli" : "Johann Carl Friedrich Gauss";
+    const client = Math.floor(Math.random() * 2)
+      ? "Daniel Bernoulli"
+      : "Johann Carl Friedrich Gauss";
     const service = Math.floor(Math.random() * 2) ? "Derivada" : "Integral";
 
     const newBook = { status, client, service };
@@ -137,17 +139,16 @@ class ProfessionalLane extends Component<IProfessionalLane, IState> {
             />
           ))}
           {!!this.state.bookings.length &&
-            this.state.bookings.map(
-            (item, index) =>
+            this.state.bookings.map((item, index) => (
               <Booking
                 key={index}
                 status={item.status}
                 client={item.client}
                 service={item.service}
                 height={hourHeight}
+                handleBooking={this.handleBooking}
               />
-            )
-          }
+            ))}
         </CardContent>
       </Card>
     );
