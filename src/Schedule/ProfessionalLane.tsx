@@ -1,19 +1,15 @@
-import React, { Component, createRef } from "react";
+import React, { Component } from "react";
 import { withStyles } from "@material-ui/core/styles";
 import styled from "styled-components";
-import { Rnd } from "react-rnd";
 import Card from "@material-ui/core/Card";
 import CardHeader from "@material-ui/core/CardHeader";
 import CardContent from "@material-ui/core/CardContent";
 import { palette } from "../themes/palette";
 import { Avatar } from "@material-ui/core";
-
-interface IBooking {
-  color: string;
-}
+import Booking from './Booking';
 
 interface IState {
-  bookings: Array<IBooking>;
+  bookings: Array<any>;
   isResizing: boolean;
   isPressed: boolean;
 }
@@ -80,7 +76,14 @@ class ProfessionalLane extends Component<IProfessionalLane, IState> {
 
   createBooking = () => {
     console.log("Criar o booking");
-    const newBook = { color: palette.secondary.blueFacebook.A500 };
+    /**
+     * Simulando a criação dos bookings variando em apenas dois status
+     */
+    const status = Math.floor(Math.random() * 2) ? "scheduled" : "inProgress";
+    const client = Math.floor(Math.random() * 2) ? "Daniel Bernoulli" : "Johann Carl Friedrich Gauss";
+    const service = Math.floor(Math.random() * 2) ? "Derivada" : "Integral";
+
+    const newBook = { status, client, service };
     this.setState({ bookings: [...this.state.bookings, newBook] });
   };
 
@@ -111,8 +114,6 @@ class ProfessionalLane extends Component<IProfessionalLane, IState> {
     this.setState({ isPressed: false });
   };
 
-  private refBooking = createRef<HTMLDivElement>();
-
   render() {
     const { classes, name, photo, hoursArr, hourHeight } = this.props;
 
@@ -137,35 +138,16 @@ class ProfessionalLane extends Component<IProfessionalLane, IState> {
           ))}
           {!!this.state.bookings.length &&
             this.state.bookings.map(
-              (item, index) => (
-                <Rnd
-                  key={index}
-                  style={{
-                    backgroundColor: item.color,
-                    position: "absolute",
-                    borderRadius: 2
-                  }}
-                  default={{
-                    x: 0,
-                    y: 0,
-                    width: 152,
-                    height: hourHeight
-                  }}
-                  resizeGrid={[1, 15]}
-                  enableResizing={{
-                    top: false,
-                    right: false,
-                    bottom: true,
-                    left: false,
-                    topRight: false,
-                    bottomRight: false,
-                    bottomLeft: false,
-                    topLeft: false
-                  }}
-                  bounds="parent"
-                />
-              )
-            )}
+            (item, index) =>
+              <Booking
+                key={index}
+                status={item.status}
+                client={item.client}
+                service={item.service}
+                height={hourHeight}
+              />
+            )
+          }
         </CardContent>
       </Card>
     );

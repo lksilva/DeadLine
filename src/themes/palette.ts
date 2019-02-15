@@ -1,5 +1,6 @@
 export const palette = {
   primary: {
+    white: '#FFFFFF',
     grayDark: {
       A1000: "#111119",
       A600: "#414161",
