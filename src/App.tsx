@@ -43,6 +43,7 @@ const Button = styled.div`
   justify-content: center;
   align-items: center;
   display: flex;
+  z-index: 2;
 `;
 
 export default class App extends Component {
@@ -158,10 +159,9 @@ export default class App extends Component {
     const nodeScheduleContent = this.refScheduleLanes.current!;
     const laneWidth = 170;
 
-    const screenSize = node.offsetWidth;
     const scheduleContentSize = nodeScheduleContent.offsetWidth;
     const limitXScrool = node.scrollWidth;
-    // Faço esse pequeno calculo para garantir que sempre o primeiro profissional ao realizar um scroll,
+    // Faço esse pequeno calculo para garantir que sempre o primeiro profissional ao realizar um scroll
     // vai ser exibido
     const variantFactor = (Math.round(scheduleContentSize / laneWidth)) * laneWidth;
 
@@ -222,7 +222,7 @@ export default class App extends Component {
             </ListProfLanes>
           </WrapperBoard>
           <Button onClick={this.handleProfSlider}>
-            <Icon fontSize="large" color="default">keyboard_arrow_right</Icon>
+            <Icon fontSize="large">keyboard_arrow_right</Icon>
           </Button>
         </Container>
       </div>
