@@ -186,7 +186,7 @@ export default class App extends Component {
     const headerDiscount = 66;
 
     return (
-      <div style={{ width: '100%', overflow: 'auto' }} ref={this.refScheduleBoard}>
+      <div style={{ width: 700, height: 500, overflow: 'auto' }} ref={this.refScheduleBoard}>
         <Container ref={this.refScheduleLanes}>
           <WrapperMetric headerDiscount={headerDiscount}>
             <MetricHours
