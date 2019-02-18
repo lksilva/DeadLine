@@ -1,6 +1,5 @@
 import React from "react";
 import { Rnd } from "react-rnd";
-import Typography from '@material-ui/core/Typography';
 import styled from "styled-components";
 
 import theme from '../themes/card';
@@ -40,10 +39,11 @@ interface IBooking {
   height: number;
   client: string;
   service: string;
+  positionY: number;
   handleBooking: () => void;
 }
 
-const Booking: React.SFC<IBooking> = ({ height, status, client, service, handleBooking }) => {
+const Booking: React.SFC<IBooking> = ({ height, status, client, service, positionY, handleBooking }) => {
   return (
     <Rnd
       style={{
@@ -56,7 +56,7 @@ const Booking: React.SFC<IBooking> = ({ height, status, client, service, handleB
       }}
       default={{
         x: 0,
-        y: 0,
+        y: positionY,
         width: 152,
         height: height
       }}

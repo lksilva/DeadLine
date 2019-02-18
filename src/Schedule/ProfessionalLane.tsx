@@ -74,27 +74,24 @@ class ProfessionalLane extends Component<IProfessionalLane, IState> {
     isPressed: false
   };
 
-  // Aqui deve ter pego a posição do Row clicado para passar 
   /**
-   * Talvez não seja a melhor solução utilizar Ref para capturar a posição do elemento clicado
-   * melhor capturar a posição na qual o usuário clicou e apartir dai realizar algum calculo
-   * matemático para saber em que posição do eixo y deve ser inserido o booking, se isso der
-   * muito trabalho vamos partir a força bruta e colocar um ref para cada elemento
+   * Método responsável por simular a criação dos bookings
    */
-  createBooking = () => {
-    const node = this.refRow.current!;
+  createBooking = (event: any, hourHeight: number) => {
+    const quandrant = this.getQuadrant(event.target.offsetTop, hourHeight);
 
-    console.log(node.scrollHeight);
+    const positionY = quandrant * hourHeight;
+
     /**
      * Simulando a criação dos bookings variando em apenas dois status
      */
     const status = Math.floor(Math.random() * 2) ? "scheduled" : "inProgress";
     const client = Math.floor(Math.random() * 2)
-      ? "Daniel Bernoulli"
-      : "Johann Carl Friedrich Gauss";
+      ? "Joseph Louis Lagrange"
+      : "Pierre-Simon Laplace";
     const service = Math.floor(Math.random() * 2) ? "Derivada" : "Integral";
 
-    const newBook = { status, client, service };
+    const newBook = { status, client, service, positionY };
     this.setState({ bookings: [...this.state.bookings, newBook] });
   };
 
@@ -125,7 +122,12 @@ class ProfessionalLane extends Component<IProfessionalLane, IState> {
     this.setState({ isPressed: false });
   };
 
-  private refRow = createRef<HTMLDivElement>()
+  /**
+   * Método responsável por capturar o quadrante"schedule" cujo usuário clicou
+   */
+  getQuadrant = (positionCliked: number, heightQuadrant: number) => {
+    return Math.floor(positionCliked / heightQuadrant);
+  }
 
   render() {
     const { classes, name, photo, hoursArr, hourHeight } = this.props;
@@ -144,10 +146,9 @@ class ProfessionalLane extends Component<IProfessionalLane, IState> {
         <CardContent classes={{ root: classes.cardContent }}>
           {hoursArr.map(item => (
             <Row
-              onClick={this.createBooking}
+              onClick={(event) => this.createBooking(event, hourHeight)}
               key={item}
               hourHeight={hourHeight}
-              ref={this.refRow}
             />
           ))}
           {!!this.state.bookings.length &&
@@ -157,6 +158,7 @@ class ProfessionalLane extends Component<IProfessionalLane, IState> {
                 status={item.status}
                 client={item.client}
                 service={item.service}
+                positionY={item.positionY}
                 height={hourHeight}
                 handleBooking={this.handleBooking}
               />
