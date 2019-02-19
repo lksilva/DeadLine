@@ -31,6 +31,8 @@ const Container = styled("div")<{
   align-items: center;
   width: 100%;
   transform: translateY(${props => ( props.finalPosition + props.headerDiscount )}px);
+  position: relative;
+  z-index: 3;
 `;
 
 const Trace = (props: ITrace) => {
