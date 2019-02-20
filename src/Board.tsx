@@ -46,7 +46,7 @@ const Button = styled.div`
   z-index: 2;
 `;
 
-export default class App extends Component {
+export default class Board extends Component {
   state = {
     initialJourney: 480,
     finalJourney: 1320,
