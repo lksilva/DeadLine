@@ -1,10 +1,11 @@
 import React, { Component, createRef } from "react";
-import Icon from '@material-ui/core/Icon';
+// import Icon from '@material-ui/core/Icon';
 import styled from "styled-components";
-import MetricHours from './Schedule/MetricHours';
-import Trace from './Schedule/Trace';
-import ProfessionalLane from './Schedule/ProfessionalLane';
+// import MetricHours from './Schedule/MetricHours';
+// import Trace from './Schedule/Trace';
+// import ProfessionalLane from './Schedule/ProfessionalLane';
 import { palette } from "./themes/palette";
+import { App } from "./hacker-news";
 
 const Container = styled.div`
   width: 100%;
@@ -187,44 +188,7 @@ export default class Board extends Component {
 
     return (
       <div style={{ width: '100%', height: 572, overflow: 'auto' }} ref={this.refScheduleBoard}>
-        <Container ref={this.refScheduleLanes}>
-          <WrapperMetric headerDiscount={headerDiscount}>
-            <MetricHours
-              hourHeight={pixelPerHour}
-              totalHeight={totalPixelsLane}
-              hoursArr={hoursArr}
-            />
-          </WrapperMetric>
-          <WrapperBoard>
-            <Trace headerDiscount={headerDiscount} finalPosition={finalPosition} />
-            <ListProfLanes>
-              <ProfessionalLane hourHeight={pixelPerHour} hoursArr={hoursArr} name="René Descartes" photo="https://avecbrasil.com.br/wp-content/uploads/2018/09/logo-roxo.png" />
-              <ProfessionalLane hourHeight={pixelPerHour} hoursArr={hoursArr} name="Gottfried Wilhelm Leibniz" photo="https://avecbrasil.com.br/wp-content/uploads/2018/09/logo-roxo.png" />
-              <ProfessionalLane hourHeight={pixelPerHour} hoursArr={hoursArr} name="Leonhard Paul Euler" photo="https://avecbrasil.com.br/wp-content/uploads/2018/09/logo-roxo.png" />
-              <ProfessionalLane hourHeight={pixelPerHour} hoursArr={hoursArr} name="Évariste Galois" photo="https://avecbrasil.com.br/wp-content/uploads/2018/09/logo-roxo.png" />
-              <ProfessionalLane hourHeight={pixelPerHour} hoursArr={hoursArr} name="Pierre de Fermat" photo="https://avecbrasil.com.br/wp-content/uploads/2018/09/logo-roxo.png" />
-              <ProfessionalLane hourHeight={pixelPerHour} hoursArr={hoursArr} name="René Descartes" photo="https://avecbrasil.com.br/wp-content/uploads/2018/09/logo-roxo.png" />
-              <ProfessionalLane hourHeight={pixelPerHour} hoursArr={hoursArr} name="Gottfried Wilhelm Leibniz" photo="https://avecbrasil.com.br/wp-content/uploads/2018/09/logo-roxo.png" />
-              <ProfessionalLane hourHeight={pixelPerHour} hoursArr={hoursArr} name="Leonhard Paul Euler" photo="https://avecbrasil.com.br/wp-content/uploads/2018/09/logo-roxo.png" />
-              <ProfessionalLane hourHeight={pixelPerHour} hoursArr={hoursArr} name="Évariste Galois" photo="https://avecbrasil.com.br/wp-content/uploads/2018/09/logo-roxo.png" />
-              <ProfessionalLane hourHeight={pixelPerHour} hoursArr={hoursArr} name="Pierre de Fermat" photo="https://avecbrasil.com.br/wp-content/uploads/2018/09/logo-roxo.png" />
-              <ProfessionalLane hourHeight={pixelPerHour} hoursArr={hoursArr} name="René Descartes" photo="https://avecbrasil.com.br/wp-content/uploads/2018/09/logo-roxo.png" />
-              <ProfessionalLane hourHeight={pixelPerHour} hoursArr={hoursArr} name="Gottfried Wilhelm Leibniz" photo="https://avecbrasil.com.br/wp-content/uploads/2018/09/logo-roxo.png" />
-              <ProfessionalLane hourHeight={pixelPerHour} hoursArr={hoursArr} name="Leonhard Paul Euler" photo="https://avecbrasil.com.br/wp-content/uploads/2018/09/logo-roxo.png" />
-              <ProfessionalLane hourHeight={pixelPerHour} hoursArr={hoursArr} name="Évariste Galois" photo="https://avecbrasil.com.br/wp-content/uploads/2018/09/logo-roxo.png" />
-              <ProfessionalLane hourHeight={pixelPerHour} hoursArr={hoursArr} name="Leonhard Paul Euler" photo="https://avecbrasil.com.br/wp-content/uploads/2018/09/logo-roxo.png" />
-              <ProfessionalLane hourHeight={pixelPerHour} hoursArr={hoursArr} name="Évariste Galois" photo="https://avecbrasil.com.br/wp-content/uploads/2018/09/logo-roxo.png" />
-              <ProfessionalLane hourHeight={pixelPerHour} hoursArr={hoursArr} name="Pierre de Fermat" photo="https://avecbrasil.com.br/wp-content/uploads/2018/09/logo-roxo.png" />
-              <ProfessionalLane hourHeight={pixelPerHour} hoursArr={hoursArr} name="René Descartes" photo="https://avecbrasil.com.br/wp-content/uploads/2018/09/logo-roxo.png" />
-              <ProfessionalLane hourHeight={pixelPerHour} hoursArr={hoursArr} name="Gottfried Wilhelm Leibniz" photo="https://avecbrasil.com.br/wp-content/uploads/2018/09/logo-roxo.png" />
-              <ProfessionalLane hourHeight={pixelPerHour} hoursArr={hoursArr} name="Leonhard Paul Euler" photo="https://avecbrasil.com.br/wp-content/uploads/2018/09/logo-roxo.png" />
-              <ProfessionalLane hourHeight={pixelPerHour} hoursArr={hoursArr} name="Évariste Galois" photo="https://avecbrasil.com.br/wp-content/uploads/2018/09/logo-roxo.png" />
-            </ListProfLanes>
-          </WrapperBoard>
-          <Button onClick={this.handleProfSlider}>
-            <Icon fontSize="large">keyboard_arrow_right</Icon>
-          </Button>
-        </Container>
+        <App />
       </div>
     );
   }
