@@ -896,6 +896,33 @@
   resolved "https://registry.yarnpkg.com/@emotion/unitless/-/unitless-0.7.3.tgz#6310a047f12d21a1036fb031317219892440416f"
   integrity sha512-4zAPlpDEh2VwXswwr/t8xGNDGg8RQiPxtxZ3qQEXyQsBV39ptTdESCjuBvGze1nLMVrxmTIKmnO/nAV8Tqjjzg==
 
+"@fullcalendar/core@^4.0.1":
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/@fullcalendar/core/-/core-4.0.1.tgz#9ae5d53f67dc5f5062ffa142b9226d57b0a3b41e"
+  integrity sha512-dUhBtZ2hIuPFJP4Rr1QOFs5/nG5EAnzqMDvy1IZ0JEBw/+0Dwj4X55Ugb3buHBh5GDrQmPbZVW21mbcUqeTprQ==
+
+"@fullcalendar/daygrid@^4.0.1":
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/@fullcalendar/daygrid/-/daygrid-4.0.1.tgz#383bfd51dd55bbec2ccc90926e9dbdf710aa3789"
+  integrity sha512-nKFFKgTm5eijOukD6pjsQSLlsBoMrKuHXc00zaHaMWSeJndGHxtseR8oeHOnclNNScMKLXLNZthzEduSqqyuRw==
+
+"@fullcalendar/interaction@^4.0.1":
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/@fullcalendar/interaction/-/interaction-4.0.1.tgz#9b4493ccf19df1f52ac7d50f6ac1ef274ca08a77"
+  integrity sha512-JvbcK6PLqPDxUsiDHc+BD2qXt7Se9GmriezKQc45Tt2I1+z7NSmMmzuA5QiKYGCnz/Sii/QfQ6JiI3t59iOLLg==
+
+"@fullcalendar/list@^4.0.1":
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/@fullcalendar/list/-/list-4.0.1.tgz#97b81ff98d2547bb317047c513903cd0fc0883ef"
+  integrity sha512-m8H9P908WzDX9nmhr1rnxrl2VHGIQMgouFxaOdinukUtQt3h4nT51aoaRnT9lVKG7mPEyMDHI+M3mKXShl1g6g==
+
+"@fullcalendar/timegrid@^4.0.1":
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/@fullcalendar/timegrid/-/timegrid-4.0.1.tgz#26454567a256af70b2aa6dae7f6351d0c0a92a32"
+  integrity sha512-gCtQ+xjVY5K3TV8o05KuAE9pCizoRIk/pCOueSkkQG8eSOFud34/LMB9OOQKb/yOQcMHx9UXEpup+xodEJC5ow==
+  dependencies:
+    "@fullcalendar/daygrid" "^4.0.1"
+
 "@material-ui/core@^3.9.2":
   version "3.9.2"
   resolved "https://registry.yarnpkg.com/@material-ui/core/-/core-3.9.2.tgz#41ed1a470e981d199829eb5d9317a671c66a6f7d"
