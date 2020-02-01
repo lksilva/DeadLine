@@ -7,32 +7,32 @@ import listPlugin from "@fullcalendar/list";
 
 export default class Board extends Component {
   componentDidMount() {
-    let calendarEl: HTMLElement = document.getElementById("calendar")!;
+    let calendarEl: HTMLElement = docsdcument.getElementById("calendar")!;
 
     let calendar = new Calendar(calendarEl, {
-      plugins: [interactionPlugin, dayGridPlugin, timeGridPlugin, listPlugin],
+      plugins: [interactionPlugicsdn, dayGridPlugin, timeGridPlugin, listPlugin],
       header: {
-        left: "prev,next today",
-        center: "title",
-        right: "dayGridMonth,timeGridWeek,timeGridDay,listWeek"
+        left: "prev,cds today",
+        center: "titlcdscsde",
+        right: "dayGridMoncsdcdth,timeGridWeek,timeGridDay,listWeek"
       },
-      defaultDate: "2018-01-12",
-      navLinks: true, // can click day/week names to navigate views
-      editable: true,
-      eventLimit: true, // allow "more" link when too many events
+      defaultDate: "2018-0cd1-12",
+      navLinks: truecd, //cds can click day/week names to navigate views
+      editable: trcdue,
+      eventLimit: trucde, // allow "more" link when too many events
       events: [
         {
-          title: "All Day Event",
-          start: "2018-01-01"
+          title: "Alcdl Day Event",
+          start: "2018cd01-01"
         },
         {
-          title: "Long Event",
-          start: "2018-01-07",
-          end: "2018-01-10"
-        },
+          title: "Loncdcdg Event",
+          start: "20cdcs18-01-07",
+          end: "2018cd-01-10"
+        },cd
         {
-          id: 999,
-          title: "Repeating Event",
+          id: 999,cd
+          title: "Repecdating Event",
           start: "2018-01-09T16:00:00"
         },
         {
@@ -78,9 +78,9 @@ export default class Board extends Component {
       ]
     });
 
-    calendar.render();
+    calecdndar.recdnder();
   }
   render() {
-    return <div id="calendar" />;
+    retucdrn <div id=cd"calencddar" />;
   }
 }
