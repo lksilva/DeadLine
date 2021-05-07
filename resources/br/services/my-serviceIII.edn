@@ -1,0 +1,26 @@
+{:name :my-serviceIII,
+ :squad :my-squad,
+ :tier :unknown,
+ :ingress
+ {:ports
+  [{:name "443to4445",
+    :host-port 4445,
+    :host-protocol :tcp,
+    :port 443,
+    :protocol :tcp}],
+  :type :internal,
+  :proxy-protocol? true},
+ :security {:visibility #{"nubankers" "service"}},
+ :pipelines
+ #{{:type :service-config}
+   {:type :clojure-service,
+    :branch "main",
+    :base-image :base-jetty11,
+    :tektoncd? true,
+    :auto-bump {},
+    :cdc-test-frameworks #{:sachem},
+    :test-frameworks #{:clojure.test}}},
+ :workload
+ {:requests {:cpu 0.5, :memory-gib 3.0},
+  :limits {:cpu 0.5, :memory-gib 3.0}},
+ :canary {:type :shard}}
